@@ -2,21 +2,37 @@ using UnityEngine;
 
 public class WeaponPickup : MonoBehaviour
 {
-    public GameObject playerWeapon; // Referencia al arma del jugador (inicialmente invisible)
+    public GameObject playerWeapon; // Arma del jugador (invisible al inicio)
     public GameObject weaponOnGround; // Arma visible en el suelo
     public GameObject crosshair; // Punto de mira en la UI
     public PlayerShooting playerShooting; // Referencia al script de disparo
-    public Timer timer; // Referencia al temporizador
+    private ObjectiveTracker objectiveTracker; // Referencia al temporizador dentro de ObjectiveTracker
+
+    private void Start()
+    {
+        objectiveTracker = FindObjectOfType<ObjectiveTracker>();
+
+        if (objectiveTracker == null)
+        {
+            Debug.LogError("⚠️ No se encontró ObjectiveTracker en la escena.");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            playerWeapon.SetActive(true); // Hacer visible el arma del jugador
-            weaponOnGround.SetActive(false); // Ocultar el arma en el suelo
-            crosshair.SetActive(true); // Activar el punto de mira en la UI
-            playerShooting.EnableShooting(); // Habilitar la mecánica de disparo
-            timer.StartTimer(); // Iniciar el temporizador de 2 minutos
+            playerWeapon.SetActive(true);
+            weaponOnGround.SetActive(false);
+            crosshair.SetActive(true);
+            playerShooting.EnableShooting();
+
+            if (objectiveTracker != null)
+            {
+                objectiveTracker.ResetTimer(); // Usar ResetTimer() en lugar de StartTimer()
+            }
+
+            Destroy(gameObject); // Eliminar el objeto de recogida
         }
     }
 }

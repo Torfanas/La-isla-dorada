@@ -61,4 +61,7 @@ public class KeyCollector : MonoBehaviour
         yield return new WaitForSeconds(6); // Esperar 6 segundos
         messagePanel.SetActive(false); // Ocultar el panel de mensaje
     }
+    
+
+
 }

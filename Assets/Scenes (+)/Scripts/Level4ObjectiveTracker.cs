@@ -10,7 +10,7 @@ public class Level4ObjectiveTracker : MonoBehaviour
 
     public float timeLimit = 120f; // Tiempo límite en segundos (2 minutos)
     private float currentTime;
-    private bool timeOut = false;
+    private bool isTimerRunning = false;
 
     private PlayerHealth playerHealth;
 
@@ -22,22 +22,37 @@ public class Level4ObjectiveTracker : MonoBehaviour
         }
 
         currentTime = timeLimit;
+        timerText.gameObject.SetActive(false); // El temporizador inicia oculto
+
         playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     void Update()
     {
-        if (!timeOut)
+        if (isTimerRunning)
         {
             currentTime -= Time.deltaTime;
             UpdateTimerUI();
 
             if (currentTime <= 0)
             {
-                timeOut = true;
+                isTimerRunning = false;
                 HandleTimeOut();
             }
         }
+    }
+
+    public void StartTimer()
+    {
+        currentTime = timeLimit;
+        isTimerRunning = true;
+        timerText.gameObject.SetActive(true); // Mostrar temporizador en UI
+    }
+
+    public void StopTimer()
+    {
+        isTimerRunning = false;
+        timerText.gameObject.SetActive(false); // Ocultar temporizador en UI
     }
 
     public void ObjectDestroyed()
@@ -56,18 +71,21 @@ public class Level4ObjectiveTracker : MonoBehaviour
         {
             keyObject.SetActive(true); // Muestra la llave
         }
+        StopTimer(); // Detener el temporizador cuando se cumplan los objetivos
     }
 
     private void UpdateTimerUI()
     {
-        timerText.text = "Tiempo restante: " + Mathf.Ceil(currentTime) + "s";
+        int minutes = Mathf.FloorToInt(currentTime / 60);
+        int seconds = Mathf.FloorToInt(currentTime % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     private void HandleTimeOut()
     {
         Debug.Log("⏳ Tiempo agotado, perdiendo una vida...");
         playerHealth.TakeDamage();
+        StopTimer();
     }
-
 }
 

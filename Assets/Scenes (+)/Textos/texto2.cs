@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class texto2 : MonoBehaviour
 {
-    public GameObject messagePanel1; // Referencia al panel de la UI
-    private bool hasBeenActivated = false; // Variable para verificar si ya se activó
+    public GameObject messagePanel10; // Referencia al panel de la UI
+    private bool hasBeenActivated = false; // Variable para verificar si ya se activï¿½
 
     void Start()
     {
-        if (messagePanel1 != null)
-            messagePanel1.SetActive(false); // Asegurarse de que el panel comience oculto
+        if (messagePanel10 != null)
+            messagePanel10.SetActive(false); // Asegurarse de que el panel comience oculto
     }
 
     void OnTriggerEnter(Collider other)
@@ -22,16 +22,16 @@ public class texto2 : MonoBehaviour
 
     void ShowPanel()
     {
-        if (messagePanel1 != null)
+        if (messagePanel10 != null)
         {
-            messagePanel1.SetActive(true); // Muestra el panel
-            Invoke("HidePanel", 6f); // Lo oculta después de 2 segundos (puedes cambiar el tiempo)
+            messagePanel10.SetActive(true); // Muestra el panel
+            Invoke("HidePanel", 6f); // Lo oculta despuï¿½s de 2 segundos (puedes cambiar el tiempo)
         }
     }
 
     void HidePanel()
     {
-        if (messagePanel1 != null)
-            messagePanel1.SetActive(false); // Oculta el panel
+        if (messagePanel10 != null)
+            messagePanel10.SetActive(false); // Oculta el panel
     }
 }

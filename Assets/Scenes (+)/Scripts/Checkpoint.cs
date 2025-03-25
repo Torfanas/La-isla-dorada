@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player")) // Si el jugador toca el checkpoint
         {
-            SpawnPointyCheckpoint spawnPointScript = other.GetComponent<SpawnPointyCheckpoint>();
+            SpawnPointyCheckpoint spawnPointScript = FindObjectOfType<SpawnPointyCheckpoint>();
 
             if (spawnPointScript != null)
             {
@@ -15,9 +15,10 @@ public class Checkpoint : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("⚠️ El jugador no tiene el script SpawnPointyCheckpoint.");
+                Debug.LogWarning("⚠️ No se encontró el script SpawnPointyCheckpoint en la escena.");
             }
         }
     }
 }
+
 
